@@ -1,14 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Index</title>
-<link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file if you have one-->
+  <title>Prufrock's Mantra</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
+      transition: all 3s ease;
+      overflow: hidden;
+    }
+
+    #text {
+      font-size: 2rem;
+      transition: all 3s ease;
+    }
+
+    .dream {
+      background: radial-gradient(circle, #3a2b1c, #0d0b0a);
+      color: #f5e6c8;
+      font-family: "Georgia", serif;
+      letter-spacing: 2px;
+    }
+
+    .echo {
+      position: absolute;
+      opacity: 0.1;
+      font-size: 2rem;
+      color: #f5e6c8;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0px);
+        opacity: 0.1;
+      }
+      to {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
-<body>
-<h1>This is the index page</h1>
-<style></style>
-<script></script> 
+
+<body onclick="startDream()">
+
+<div id="text">Prufrock’s like my mantra</div>
+
+<script>
+let started = false;
+
+function startDream() {
+  if (started) return;
+  started = true;
+
+  // shift into "1920s dream"
+  document.body.classList.add("dream");
+
+  let text = document.getElementById("text");
+
+  setTimeout(() => {
+    text.innerText = "Do I dare?";
+  }, 2000);
+
+  setTimeout(() => {
+    text.innerText = "Do I dare disturb the universe?";
+  }, 4000);
+
+  setTimeout(() => {
+    text.innerText = "In a minute there is time...";
+  }, 6000);
+
+  // create floating echoes
+  setInterval(() => {
+    let echo = document.createElement("div");
+    echo.className = "echo";
+    echo.innerText = "Prufrock’s like my mantra";
+
+    echo.style.left = Math.random() * window.innerWidth + "px";
+    echo.style.top = window.innerHeight + "px";
+
+    document.body.appendChild(echo);
+
+    setTimeout(() => {
+      echo.remove();
+    }, 6000);
+  }, 800);
+}
+</script>
+
 </body>
 </html>
