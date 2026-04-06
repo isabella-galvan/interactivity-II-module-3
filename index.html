@@ -19,6 +19,7 @@
     #text {
       font-size: 2rem;
       transition: all 3s ease;
+      cursor: pointer; /* hints user can hover */
     }
 
     .dream {
@@ -49,53 +50,51 @@
   </style>
 </head>
 
-<body onclick="startDream()">
+<body>
 
 <div id="text">"Prufrock’s like... my mantra!"</div>
 
 <script>
 let started = false;
+const lines = [
+  '"Prufrock’s like... my mantra!"',
+  "Do I dare?",
+  "Do I dare disturb the universe?",
+  "In a minute there is time..."
+];
+let index = 0;
 
-function startDream() {
-  if (started) return;
-  started = true;
+const text = document.getElementById("text");
 
-  // shift into "1920s dream"
-  document.body.classList.add("dream");
+text.addEventListener("mouseover", () => {
+  // start dreamy background and echoes on first hover
+  if (!started) {
+    started = true;
 
-  let text = document.getElementById("text");
+    document.body.classList.add("dream");
 
-  setTimeout(() => {
-    text.innerText = "Do I dare?";
-  }, 2000);
+    // floating echoes
+    setInterval(() => {
+      let echo = document.createElement("div");
+      echo.className = "echo";
+      echo.innerText = "Do I dare? Do I dare disturb the universe?";
 
-  setTimeout(() => {
-    text.innerText = "Do I dare disturb the universe?";
-  }, 4000);
+      echo.style.left = Math.random() * window.innerWidth + "px";
+      echo.style.top = window.innerHeight + "px";
 
-  setTimeout(() => {
-    text.innerText = "In a minute there is time...";
-  }, 6000);
+      document.body.appendChild(echo);
 
-  // create floating echoes
-  setInterval(() => {
-    let echo = document.createElement("div");
-    echo.className = "echo";
-    echo.innerText = "Do I dare?";
+      setTimeout(() => {
+        echo.remove();
+      }, 6000);
+    }, 800);
+  }
 
-    echo.style.left = Math.random() * window.innerWidth + "px";
-    echo.style.top = window.innerHeight + "px";
-
-    document.body.appendChild(echo);
-
-    setTimeout(() => {
-      echo.remove();
-    }, 6000);
-  }, 800);
-}
+  // change central text to next line
+  index = (index + 1) % lines.length;
+  text.innerText = lines[index];
+});
 </script>
- 
- 
-
 
 </body>
+</html>
