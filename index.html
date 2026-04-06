@@ -28,7 +28,7 @@
       font-family: Georgia, serif;
       letter-spacing: 2px;
     }
-    /* ECHOING */
+    /* ECHO */
     .echo {
       position: absolute;
       opacity: 0.1;
@@ -45,7 +45,6 @@
 <body>
 <div id="text">"Prufrock’s like... my mantra!"</div>
 
-<!-- Move the script here, after the HTML elements -->
 <script>
   const text = document.getElementById("text");
   let started = false;
@@ -72,7 +71,7 @@
         setTimeout(() => echo.remove(), 6000);
       }, 800);
     }
-    // Cycle to the next poem line
+ 
     index = (index + 1) % lines.length;
     text.innerText = lines[index];
   };
