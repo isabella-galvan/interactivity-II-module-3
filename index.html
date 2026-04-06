@@ -19,7 +19,6 @@
     #text {
       font-size: 2rem;
       transition: all 3s ease;
-      cursor: pointer; /* hints that you can hover */
     }
 
     .dream {
@@ -50,58 +49,55 @@
   </style>
 </head>
 
-<body>
+<body onclick="startDream()">
 
-<div id="text">Prufrock’s like... my mantra!</div>
+<div id="text">Prufrock’s like my mantra</div>
 
 <script>
 let started = false;
-const lines = [
-  "Time to turn back and descend the stair...",
-   "With a bald spot in the middle of my hair",
-  "Do I dare?",
-  "Disturb the universe",
-  "In a minute there is time...",
-  "For decisions and revisions which a minute will reverse."
-];
-let index = 0;
 
-const text = document.getElementById("text");
+function startDream() {
+  if (started) return;
+  started = true;
 
-text.addEventListener("mouseover", () => {
-  if (!started) {
-    started = true;
+  // shift into "1920s dream"
+  document.body.classList.add("dream");
 
-    // shift into "1920s dream"
-    document.body.classList.add("dream");
+  let text = document.getElementById("text");
 
-    // floating echoes
-    setInterval(() => {
-      let echo = document.createElement("div");
-      echo.className = "echo";
-      echo.innerText =  "Time to turn back and descend the stair...",
-   "With a bald spot in the middle of my hair",
-  "Do I dare?",
-  "Disturb the universe",
-  "In a minute there is time...",
-  "For decisions and revisions which a minute will reverse.";
+  setTimeout(() => {
+    text.innerText = "Do I dare?";
+  }, 2000);
 
-      echo.style.left = Math.random() * window.innerWidth + "px";
-      echo.style.top = window.innerHeight + "px";
+  setTimeout(() => {
+    text.innerText = "Do I dare disturb the universe?";
+  }, 4000);
 
-      document.body.appendChild(echo);
+  setTimeout(() => {
+    text.innerText = "In a minute there is time...";
+  }, 6000);
 
-      setTimeout(() => {
-        echo.remove();
-      }, 6000);
-    }, 800);
-  }
+  // create floating echoes
+  setInterval(() => {
+    let echo = document.createElement("div");
+    echo.className = "echo";
+    echo.innerText = "Prufrock’s like my mantra";
 
-  // change the central text
-  index = (index + 1) % lines.length;
-  text.innerText = lines[index];
-});
+    echo.style.left = Math.random() * window.innerWidth + "px";
+    echo.style.top = window.innerHeight + "px";
+
+    document.body.appendChild(echo);
+
+    setTimeout(() => {
+      echo.remove();
+    }, 6000);
+  }, 800);
+}
 </script>
+  .dream #text {
+  filter: blur(1px);
+}
+
 
 </body>
 </html>
