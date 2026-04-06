@@ -18,17 +18,17 @@
     #text {
       font-size: 32px;
       transition: all 3s ease;
-      cursor: pointer; /* indicates interactivity */
+      cursor: pointer; 
       margin-bottom: 20px;
     }
-    /* Dreamy background style */
+    /* BACKGROUND GRADIENT */
     .dream {
       background: radial-gradient(circle, #3a2b1c, #0d0b0a);
       color: #f5e6c8;
       font-family: Georgia, serif;
       letter-spacing: 2px;
     }
-    /* Floating echo style */
+    /* ECHOING */
     .echo {
       position: absolute;
       opacity: 0.1;
@@ -45,40 +45,37 @@
 <body>
 <div id="text">"Prufrock’s like... my mantra!"</div>
 
+<!-- Move the script here, after the HTML elements -->
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const text = document.getElementById("text");
-    let started = false;
-    const lines = [
-      "Prufrock’s like my mantra",
-      "Do I dare?",
-      "Do I dare disturb the universe?",
-      "In a minute there is time..."
-    ];
-    let index = 0;
+  const text = document.getElementById("text");
+  let started = false;
+  const lines = [
+    "Prufrock’s like my mantra",
+    "Do I dare?",
+    "Do I dare disturb the universe?",
+    "In a minute there is time..."
+  ];
+  let index = 0;
 
-    // When the text itself is clicked (or hovered, if you prefer)
-    text.onclick = () => {
-      if (!started) {
-        started = true;
-        document.body.classList.add("dream");
-        // Create floating echoes every 800ms
-        setInterval(() => {
-          const echo = document.createElement("div");
-          echo.className = "echo";
-          echo.innerText = "I have measured out my life with coffee spoons";
-          echo.style.left = Math.random() * window.innerWidth + "px";
-          echo.style.top = window.innerHeight + "px";
-          document.body.appendChild(echo);
-          setTimeout(() => echo.remove(), 6000);
-        }, 800);
-      }
-      // Cycle to the next poem line
-      index = (index + 1) % lines.length;
-      text.innerText = lines[index];
-    };
-
-  });
+  /* CLICKING ON THE TEXT */
+  text.onclick = () => {
+    if (!started) {
+      started = true;
+      document.body.classList.add("dream");
+      setInterval(() => {
+        const echo = document.createElement("div");
+        echo.className = "echo";
+        echo.innerText = "I have measured out my life with coffee spoons";
+        echo.style.left = Math.random() * window.innerWidth + "px";
+        echo.style.top = window.innerHeight + "px";
+        document.body.appendChild(echo);
+        setTimeout(() => echo.remove(), 6000);
+      }, 800);
+    }
+    // Cycle to the next poem line
+    index = (index + 1) % lines.length;
+    text.innerText = lines[index];
+  };
 </script>
 </body>
 </html>
