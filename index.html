@@ -16,7 +16,7 @@
       flex-direction: column;
     }
     #text {
-      font-size: 2rem;
+      font-size: 32px;
       transition: all 3s ease;
       cursor: pointer; /* indicates interactivity */
       margin-bottom: 20px;
@@ -32,7 +32,7 @@
     .echo {
       position: absolute;
       opacity: 0.1;
-      font-size: 2rem;
+      font-size: 32px;
       color: #f5e6c8;
       animation: float 6s linear infinite;
     }
@@ -78,13 +78,6 @@
       text.innerText = lines[index];
     };
 
-    // Optional: also change line on hover
-    /*
-    text.addEventListener("mouseenter", () => {
-      index = (index + 1) % lines.length;
-      text.innerText = lines[index];
-    });
-    */
   });
 </script>
 </body>
