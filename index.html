@@ -2,27 +2,19 @@
 <html>
 <head>
   <title>The Love Song of J. Alfred Prufrock</title>
+  <title>Prufrock's Mantra</title>
 
   <style>
     body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      font-family: Arial, sans-serif;
-      transition: all 3s ease;
-      overflow: hidden;
-    }
 
     #text {
       font-size: 2rem;
       transition: all 3s ease;
-      cursor: pointer; /* indicates interactivity */
+      cursor: pointer; /* hints user can hover */
     }
 
     .dream {
+
       background: radial-gradient(circle, #3a2b1c, #0d0b0a);
       color: #f5e6c8;
       font-family: "Georgia", serif;
@@ -50,14 +42,29 @@
   </style>
 </head>
 
+<body onclick="startDream()">
 <body>
 
 <div id="text">"Prufrock’s like... my mantra!"</div>
+<div id="text">Prufrock’s like my mantra</div>
 
 <script>
 let started = false;
+
+  setInterval(() => {
+    let echo = document.createElement("div");
+    echo.className = "echo";
+    echo.innerText = "Do I dare?";
+    echo.innerText = "Prufrock’s like my mantra";
+
+    echo.style.left = Math.random() * window.innerWidth + "px";
+    echo.style.top = window.innerHeight + "px";
+
+    }, 6000);
+  }, 800);
+}
 const lines = [
-  "And indeed there will be time to wonder, “Do I dare?” and, “Do I dare?”",
+  '"Prufrock’s like... my mantra!"',
   "Do I dare?",
   "Do I dare disturb the universe?",
   "In a minute there is time..."
@@ -66,16 +73,18 @@ let index = 0;
 
 const text = document.getElementById("text");
 
-text.addEventListener("mouseenter", () => {
-  // start the dreamy background and floating echoes on first hover
+text.addEventListener("mouseover", () => {
+  // start dreamy background and echoes on first hover
   if (!started) {
     started = true;
+
     document.body.classList.add("dream");
 
+    // floating echoes
     setInterval(() => {
       let echo = document.createElement("div");
       echo.className = "echo";
-      echo.innerText = "Prufrock’s like my mantra";
+      echo.innerText = "Do I dare? Do I dare disturb the universe?";
 
       echo.style.left = Math.random() * window.innerWidth + "px";
       echo.style.top = window.innerHeight + "px";
@@ -88,11 +97,14 @@ text.addEventListener("mouseenter", () => {
     }, 800);
   }
 
-  // cycle through poem lines on hover
+  // change central text to next line
   index = (index + 1) % lines.length;
   text.innerText = lines[index];
 });
 </script>
+ 
+ 
+
 
 </body>
 </html>
