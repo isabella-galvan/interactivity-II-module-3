@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>The Love Song of J. Alfred Prufrock</title>
-
   <style>
     body {
       margin: 0;
@@ -10,25 +9,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #ffffff;
+      background: #fff;
       font-family: Arial, sans-serif;
       transition: all 3s ease;
       overflow: hidden;
+      flex-direction: column;
     }
-
     #text {
       font-size: 2rem;
       transition: all 3s ease;
       cursor: pointer; /* indicates interactivity */
+      margin-bottom: 20px;
     }
-
+    /* Dreamy background style */
     .dream {
       background: radial-gradient(circle, #3a2b1c, #0d0b0a);
       color: #f5e6c8;
-      font-family: "Georgia", serif;
+      font-family: Georgia, serif;
       letter-spacing: 2px;
     }
-
+    /* Floating echo style */
     .echo {
       position: absolute;
       opacity: 0.1;
@@ -36,63 +36,56 @@
       color: #f5e6c8;
       animation: float 6s linear infinite;
     }
-
     @keyframes float {
-      from {
-        transform: translateY(0px);
-        opacity: 0.1;
-      }
-      to {
-        transform: translateY(-200px);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 0.1; }
+      to { transform: translateY(-200px); opacity: 0; }
     }
   </style>
 </head>
-
 <body>
-
 <div id="text">"Prufrock’s like... my mantra!"</div>
 
 <script>
-let started = false;
-const lines = [
-  "Prufrock’s like my mantra",
-  "Do I dare?",
-  "Do I dare disturb the universe?",
-  "In a minute there is time..."
-];
-let index = 0;
+  document.addEventListener("DOMContentLoaded", () => {
+    const text = document.getElementById("text");
+    let started = false;
+    const lines = [
+      "Prufrock’s like my mantra",
+      "Do I dare?",
+      "Do I dare disturb the universe?",
+      "In a minute there is time..."
+    ];
+    let index = 0;
 
-const text = document.getElementById("text");
+    // When the text itself is clicked (or hovered, if you prefer)
+    text.onclick = () => {
+      if (!started) {
+        started = true;
+        document.body.classList.add("dream");
+        // Create floating echoes every 800ms
+        setInterval(() => {
+          const echo = document.createElement("div");
+          echo.className = "echo";
+          echo.innerText = "I have measured out my life with coffee spoons";
+          echo.style.left = Math.random() * window.innerWidth + "px";
+          echo.style.top = window.innerHeight + "px";
+          document.body.appendChild(echo);
+          setTimeout(() => echo.remove(), 6000);
+        }, 800);
+      }
+      // Cycle to the next poem line
+      index = (index + 1) % lines.length;
+      text.innerText = lines[index];
+    };
 
-text.addEventListener("mouseenter", () => {
-  // start the dreamy background and floating echoes on first hover
-  if (!started) {
-    started = true;
-    document.body.classList.add("dream");
-
-    setInterval(() => {
-      let echo = document.createElement("div");
-      echo.className = "echo";
-      echo.innerText = "I have measured out my life with coffee spoons";
-
-      echo.style.left = Math.random() * window.innerWidth + "px";
-      echo.style.top = window.innerHeight + "px";
-
-      document.body.appendChild(echo);
-
-      setTimeout(() => {
-        echo.remove();
-      }, 6000);
-    }, 800);
-  }
-
-  // cycle through poem lines on hover
-  index = (index + 1) % lines.length;
-  text.innerText = lines[index];
-});
+    // Optional: also change line on hover
+    /*
+    text.addEventListener("mouseenter", () => {
+      index = (index + 1) % lines.length;
+      text.innerText = lines[index];
+    });
+    */
+  });
 </script>
-
 </body>
 </html>
