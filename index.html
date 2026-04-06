@@ -12,37 +12,42 @@
       background: #fff;
       font-family: Arial, sans-serif;
       transition: all 2s ease;
-      overflow: hidden;
     }
 
     #text {
       font-size: 2rem;
-      transition: all 2s ease;
+      transition: all 1s ease;
+      cursor: pointer;
     }
   </style>
 </head>
-<body onclick="startDream()">
+<body>
   <div id="text">Prufrock’s like my mantra</div>
 
   <script>
-    let started = false;
+    const text = document.getElementById("text");
+    const lines = [
+      "Prufrock’s like my mantra",
+      "Do I dare?",
+      "Do I dare disturb the universe?",
+      "In a minute there is time..."
+    ];
+    let index = 0;
+    let dreamyStarted = false;
 
-    function startDream() {
-      if (started) return;
-      started = true;
+    text.addEventListener("mouseover", () => {
+      // start the dreamy background on first hover
+      if (!dreamyStarted) {
+        document.body.style.background = "#3a2b1c";
+        document.body.style.color = "#f5e6c8";
+        document.body.style.fontFamily = "Georgia, serif";
+        dreamyStarted = true;
+      }
 
-      // background and font shift to dreamy 1920s
-      document.body.style.background = "#3a2b1c";
-      document.body.style.color = "#f5e6c8";
-      document.body.style.fontFamily = "Georgia, serif";
-
-      let text = document.getElementById("text");
-
-      // show lines of Prufrock gradually
-      setTimeout(() => { text.innerText = "Do I dare?"; }, 2000);
-      setTimeout(() => { text.innerText = "Do I dare disturb the universe?"; }, 4000);
-      setTimeout(() => { text.innerText = "In a minute there is time..."; }, 6000);
-    }
+      // cycle through the lines
+      index = (index + 1) % lines.length;
+      text.innerText = lines[index];
+    });
   </script>
 </body>
 </html>
