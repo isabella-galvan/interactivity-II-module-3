@@ -7,19 +7,22 @@
     body {
       margin: 0;
       height: 100vh;
+      width: 100vw;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #ffffff;
       font-family: Arial, sans-serif;
-      transition: all 3s ease;
+      transition: all 2s ease;
       overflow: hidden;
+      position: relative;
     }
 
     #text {
       font-size: 2rem;
-      transition: all 3s ease;
-      cursor: pointer; /* hints user can hover */
+      transition: all 0.2s ease;
+      position: absolute;
+      cursor: pointer;
     }
 
     .dream {
@@ -38,14 +41,8 @@
     }
 
     @keyframes float {
-      from {
-        transform: translateY(0px);
-        opacity: 0.1;
-      }
-      to {
-        transform: translateY(-200px);
-        opacity: 0;
-      }
+      from { transform: translateY(0px); opacity: 0.1; }
+      to   { transform: translateY(-200px); opacity: 0; }
     }
   </style>
 </head>
@@ -55,7 +52,29 @@
 <div id="text">"Prufrock’s like... my mantra!"</div>
 
 <script>
+const text = document.getElementById("text");
 let started = false;
+
+// center the text initially
+text.style.left = window.innerWidth/2 + "px";
+text.style.top = window.innerHeight/2 + "px";
+
+// dreamy background + floating echoes
+function startDream() {
+  document.body.classList.add("dream");
+
+  setInterval(() => {
+    let echo = document.createElement("div");
+    echo.className = "echo";
+    echo.innerText = "Do I dare? Do I dare disturb the universe?";
+    echo.style.left = Math.random() * window.innerWidth + "px";
+    echo.style.top = window.innerHeight + "px";
+    document.body.appendChild(echo);
+    setTimeout(() => echo.remove(), 6000);
+  }, 800);
+}
+
+// poem lines
 const lines = [
   '"Prufrock’s like... my mantra!"',
   "Do I dare?",
@@ -64,33 +83,31 @@ const lines = [
 ];
 let index = 0;
 
-const text = document.getElementById("text");
-
-text.addEventListener("mouseover", () => {
-  // start dreamy background and echoes on first hover
+// move text randomly away from cursor
+document.addEventListener("mousemove", (e) => {
   if (!started) {
     started = true;
-
-    document.body.classList.add("dream");
-
-    // floating echoes
-    setInterval(() => {
-      let echo = document.createElement("div");
-      echo.className = "echo";
-      echo.innerText = "Do I dare? Do I dare disturb the universe?";
-
-      echo.style.left = Math.random() * window.innerWidth + "px";
-      echo.style.top = window.innerHeight + "px";
-
-      document.body.appendChild(echo);
-
-      setTimeout(() => {
-        echo.remove();
-      }, 6000);
-    }, 800);
+    startDream();
   }
 
-  // change central text to next line
+  // randomly move the text a little each time mouse moves
+  const rect = text.getBoundingClientRect();
+  let moveX = (Math.random() - 0.5) * 100; // move left/right
+  let moveY = (Math.random() - 0.5) * 100; // move up/down
+
+  let newX = rect.left + moveX;
+  let newY = rect.top + moveY;
+
+  // keep it inside the window
+  newX = Math.max(0, Math.min(window.innerWidth - rect.width, newX));
+  newY = Math.max(0, Math.min(window.innerHeight - rect.height, newY));
+
+  text.style.left = newX + "px";
+  text.style.top = newY + "px";
+});
+
+// hover to cycle lines
+text.addEventListener("mouseenter", () => {
   index = (index + 1) % lines.length;
   text.innerText = lines[index];
 });
